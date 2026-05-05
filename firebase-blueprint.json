@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "Design": {
+      "title": "Graphic Design",
+      "description": "Metadata for a graphic design project",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "Title of the design" },
+        "description": { "type": "string", "description": "Short description of the design" },
+        "imageUrl": { "type": "string", "description": "URL of the uploaded design image" },
+        "videoUrl": { "type": "string", "description": "Optional URL for video content" },
+        "category": { "type": "string", "enum": ["Social Media Designs", "Web3 Designs", "Print Media", "Flyers/Posters", "Product Designs", "Motion Graphics"], "description": "Category of the design" },
+        "tags": { "type": "array", "items": { "type": "string" }, "description": "Searchable tags" },
+        "likes": { "type": "integer", "description": "Count of likes received" },
+        "views": { "type": "integer", "description": "Count of times the design was viewed" },
+        "authorId": { "type": "string", "description": "UID of the admin who uploaded" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp of upload" },
+        "featured": { "type": "boolean", "description": "Whether this is a featured design" }
+      },
+      "required": ["title", "imageUrl", "category", "likes", "views", "createdAt"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "A viewer's review of a design",
+      "type": "object",
+      "properties": {
+        "reviewerName": { "type": "string", "description": "Name of the reviewer" },
+        "comment": { "type": "string", "description": "The review text" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp of review" }
+      },
+      "required": ["reviewerName", "comment", "createdAt"]
+    },
+    "Inquiry": {
+      "title": "Inquiry",
+      "description": "A message from the contact form",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Sender's name" },
+        "email": { "type": "string", "format": "email", "description": "Sender's email" },
+        "subject": { "type": "string", "description": "Message subject" },
+        "message": { "type": "string", "description": "Message body" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp of inquiry" }
+      },
+      "required": ["name", "email", "message", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/designs/{designId}": {
+      "schema": "Design",
+      "description": "Portfolio designs"
+    },
+    "/designs/{designId}/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "User reviews for a design"
+    },
+    "/inquiries/{inquiryId}": {
+      "schema": "Inquiry",
+      "description": "Contact form submissions"
+    }
+  }
+}
